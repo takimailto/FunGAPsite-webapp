@@ -80,11 +80,11 @@ pymysql.install_as_MySQLdb()
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'FunGAPsite',
-        'HOST': '127.0.0.1',
-        'USER': 'root',
-        'PASSWORD': 'takimailtoA741020',
-        'PORT': '3306',
+        'NAME': '',
+        'HOST': '',
+        'USER': '',
+        'PASSWORD': '',
+        'PORT': '',
     }
 }
 
@@ -133,8 +133,8 @@ STATICFILES_DIRS = [
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'chenmailto0@gmail.com'
-EMAIL_HOST_PASSWORD = 'takimailtoA741020'
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
 EMAIL_USE_TLS = True
 DEFAULT_FROMEMAIL = EMAIL_HOST_USER
 
