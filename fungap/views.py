@@ -15,7 +15,7 @@ import multiprocessing
 from glob import glob
 import re
 
-BASE_DIR = '/home/mailto/PycharmProjects/FunGAPsite/work_space/users'
+BASE_DIR = '/***/FunGAPsite-webapp/FunGAPsite/work_space/users' # ***: FunGAP path in your computer
 
 
 def AnalysisThread(genome_assembly, output_dir, num_cores, trans_read_files, max_intron, sister_proteome, project):
