@@ -1,0 +1,32 @@
+div#sidebar_left {
+  float: left;
+  width: 155px;
+  margin: 10px 8px 100% 0px;
+}
+
+div#sidebar_left ul.menu {
+  list-style: none;
+  width: auto;
+  margin: 0px 0px 20px 0px;
+  padding: 0;
+}
+
+div#sidebar_left ul.menu li a {
+  font-size: 70%;
+  font-weight: bold;
+  margin: 0;
+  padding: 10px 0px 10px 20px;
+  min-height: 1em;
+  display: block;
+  border-bottom: 1px dotted #999999;
+}
+
+div#sidebar_left ul.menu a:link {
+  color: #000000;
+  text-decoration: none;
+}
+
+div#sidebar_left ul.menu a:visited {
+  color: #000000;
+  text-decoration: none;
+}

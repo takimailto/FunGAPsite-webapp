@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>One step operation</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+</style>
+    <style>
+/* Set a style for all buttons */
+button:hover {
+  opacity: 0.8;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.fungap {
+  width: 40%;
+
+}
+
+.container {
+  padding: 16px;
+}
+
+/* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+/* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+/* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+
+        }
+    </style>
+    <style>
+.box select {
+  background-color: white;
+  color: black;
+  width: 200px;
+    height: 50px;
+  border: none;
+  font-size: 20px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  outline: none;
+}
+
+.box::before {
+  content: "\f13a";
+    font-family: FontAwesome, cursive;
+  text-align: center;
+  font-size: 10px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 30px;
+}
+    </style>
+    <style>
+        .sidebar {
+  margin: 0;
+  padding: 0;
+  width: 300px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+.sidebar a.active {
+  background-color: black;
+  color: white;
+}
+
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+}
+
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+}
+    </style>
+     <style>
+    .scroll {
+        width: 80%;
+        height: auto;
+        color: black;
+        overflow-y: scroll;
+
+        scrollbar-face-color: #D4D4D4;
+        scrollbar-shadow-color: #919192;
+        scrollbar-3dlight-color: #ffffff;
+        scrollbar-arrow-color: #919192;
+        scrollbar-track-color: #ffffff;
+        scrollbar-darkshadow-color: #ffffff;
+    }
+    </style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="w3-top">
+    <div class="w3-bar w3-black">
+        <a href="https://github.com/CompSynBioLab-KoreaUniv/FunGAP" class="w3-bar-item w3-button"><img src="/static/fungap/images/fluidicon.png" alt="" style="height:20px">GITHUB</a>
+        <a href="http://compbio.korea.ac.kr/csbl/index.html" class="w3-bar-item w3-button">ABOUT US</a>
+        <a class="w3-bar-item w3-button w3-dropdown-click" onclick="DropFunc()" style="float: right"><img src="/static/fungap/images/state.png" style="height: 20px" alt=""><div id="Drop" class="w3-dropdown-content w3-bar-block w3-white w3-card" style="position: fixed; right: 0px; top: 40px"><p style="color: #5a6268">Sign in as:<br><strong style="color: black">{{ request.session.user_name }}</strong></p>
+      <form method="post">{% csrf_token %}<button type="submit" name="signout" class="w3-bar-item w3-button">Sign out</button></form></div></a>
+    </div>
+</div>
+<br><br>
+<div class="sidebar">
+  <a class="active" href="/homepage/">Home</a>
+</div>
+<div class="w3-container" style="position: absolute; left:300px; right:300px;">
+    <form method="post">
+        {% csrf_token %}
+    <div class="imgcontainer">
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+        <h4>One Step Operation<br><a style="color: #5a6268; font-size: 15px">Run one step in FunGAP</a> </h4>
+        <div class="container">
+             <button type='button' class="btn btn-success" title="Aligh with the genome assembly" onclick="document.getElementById('hisat2').style.display='block'" style="width:auto;">Hisat2</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-success" title="Transcripts assembly" onclick="document.getElementById('trinity').style.display='block'">Trinity</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-success" title="Build genome-specific repeat library" onclick="document.getElementById('repeatmodeler').style.display='block'">RepeatModeler</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-success" title="Create masked genome assembly with the repeat library" onclick="document.getElementById('repeatmasker').style.display='block'">RepeatMasker</button><br><br>
+            <button type='button' class="btn btn-info" title="A portable and easily configurable genome annotation pipeline" onclick="document.getElementById('maker').style.display='block'">Maker</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-info" title="unsupervised RNA sequencing-based genome annotation" onclick="document.getElementById('braker1').style.display='block'">Braker1</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-info" title="predicts genes in eukaryotic genomic sequences" onclick="document.getElementById('augustus').style.display='block'">Augustus</button>&nbsp&nbsp&nbsp&nbsp<br><br>
+            <button type='button' class="btn btn-warning" title="Benchmarking Universal Single-Copy Orthologs" onclick="document.getElementById('busco').style.display='block'">Busco</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-warning" title="Compare with genes in phylogenetically close genomes" onclick="document.getElementById('blastp').style.display='block'">Blastp</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-warning" title="Pfam domain prediction" onclick="document.getElementById('interpro').style.display='block'">InterProScan</button>&nbsp&nbsp&nbsp&nbsp
+            <button type='button' class="btn btn-warning" title="Compared with assembled transcriptome" onclick="document.getElementById('blastn').style.display='block'">Blastn</button>&nbsp&nbsp&nbsp&nbsp &nbsp&nbsp&nbsp<button type="button" class="btn btn-warning" title="make nonredundant gene models" onclick="document.getElementById('nr').style.display='block'">Make NR proteins</button><br><br>
+            <button type="button" class="btn btn-warning" title="Get blastp score" onclick="document.getElementById('importblastp').style.display='block'">Import Blastp</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-warning" title="Get busco score" onclick="document.getElementById('importbo').style.display='block'">Import Busco</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-warning" title="Get pfam score" onclick="document.getElementById('importpm').style.display='block'">Import Pfam Scam</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-warning" title="Get blastn score" onclick="document.getElementById('importbn').style.display='block'">Import blastn</button>&nbsp&nbsp&nbsp&nbsp<br><br>
+            <button type="button" class="btn btn-warning" title="Catch bad genes for given gff3 files" onclick="document.getElementById('catchbad').style.display='block'">Catch bad genes</button><br><br>
+            <button type="button" class="btn btn-warning" title="filter your GFF3 files" onclick="document.getElementById('filter').style.display='block'">Filter</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-warning" title="Post process of your gene model" onclick="document.getElementById('postprocess').style.display='block'">Post Process</button>&nbsp&nbsp&nbsp&nbsp
+            <button type="button" class="btn btn-warning" title="Create markdown file  of your result." onclick="document.getElementById('createmarkdown').style.display='block'">Create markdown</button>
+            <h4>Others: </h4>
+            <button type="button" class="btn" onclick="document.getElementById('downloadprotdb').style.display='block'">Download sister proteome</button>
+            <button type="button" class="btn" onclick="document.getElementById('getaugustusspecies').style.display='block'">Get augustus species</button>
+        </div>
+    </form>
+</div>
+<!--hisat2 modal-->
+<div id="hisat2" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('hisat2').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Please specify file path of the reads, the max intron parameter and the output fold. It will not check your input files, so please be aware of your input.</p><br>
+        <label><b>The reads path in your computer(can be multiple) using space to split multiple files:</b>
+            <input type="text" name="reads"></label><br>
+        <label><b>genome assembly</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>Max intron(default is 2000 for fungi)</b>
+            <input type="text" name="maxintron"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="hisat2" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--Trinity modal-->
+<div id="trinity" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('trinity').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Please specify file path of the bam file, the max intron parameter and the output fold. It will not check your input files, so please be aware of your input.Parameter --jaccard_clip in Trinity is used for fungal transcript assembly because high gene density leads to UTR overlap in the assembly.</p><br>
+        <label><b>The bam files path in your computer(can be multiple) using space to split multiple files:</b>
+            <input type="text" name="bams"></label><br>
+        <label><b>Max intron(default is 2000 for fungi)</b>
+            <input type="text" name="maxintron"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+        <label>
+            <input type="checkbox" name="jaccardclip" checked/>
+        </label>--jaccard_clip<br>
+
+      <button type="submit" name="trinity_run" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--repeatmodeler modal-->
+<div id="repeatmodeler" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('repeatmodeler').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Please specify file path of the genome assembly file. It will not check your input files, so please be aware of your input.</p><br>
+        <label><b>The genome assembly file path in your computer:</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="repeatmodeler" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--repeatmasker modal-->
+<div id="repeatmasker" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('repeatmasker').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>These process just mask the genome assembly according to the repeat library you provided, with soft masking.</p><br>
+        <label><b>The genome assembly file path in your computer:</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>assign the repeat model path</b>
+            <input type="text" name="repeatmodel"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="repeatmasker" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--maker modal-->
+<div id="maker" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('maker').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>FunGAP runs Maker four times with iterative SNAP gene model training, as previously described. FunGAP uses the correct_est_fusion option to correct fusion of neighbor transcripts in mRNA assembly due to the above-mentioned high gene density of fungal genomes. Maximum intron length is set to 5000 bp with the split_hit option. Single-exon genes longer than 50 amino acids are predicted by setting the single_exon and single_length options.</p><br>
+        <label><b>The genome assembly file path in your computer:</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>assign the repeat model path</b>
+            <input type="text" name="repeatmodel"></label><br>
+        <label><b>Augustus species</b>
+            <input type="text" name="augustus"></label><br>
+        <label><b>Sister protein database:</b>
+            <input type="text" name="sisterprotein"></label><br>
+        <label><b>Trinity assembly(please use space to split multiple files paths)</b>
+            <input type="text" name="trinityasms"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+        <label>
+            <input type="checkbox" name="genemarkfungus" checked/>
+        </label>--genemark_fungus<br>
+
+      <button type="submit" name="maker" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--braker1 modal-->
+<div id="braker1" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('braker1').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Braker performs unsupervised RNA sequencing-based genome annotation using GeneMark-ET and Augustus. The option --softmasking is turned on as repeat-masking generates soft-masked assembly. The input file for Braker is the mRNA reads alignment formatted in a BAM file produced in the preprocessing step.</p><br>
+        <label><b>The masked genome assembly file path in your computer:</b>
+            <input type="text" name="maskedassembly"></label><br>
+         <label><b>The bam files path in your computer(can be multiple) using space to split multiple files:</b>
+             <input type="text" name="bams"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+        <label>
+            <input type="checkbox" name="brakerfungus" checked/>
+        </label>--braker_fungus<br>
+
+      <button type="submit" name="braker1" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--augustus modal-->
+<div id="augustus" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('augustus').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>FunGAP runs Augustus with the augustus_species parameter specified by a user. The option --softmasking is turned on as repeat-masking generates soft-masked assembly. To allow overlapping CDS predictions, FunGAP turns on the --singlestrand option. The output is GFF3, and translated protein sequences are generated in FASTA by a simple parsing script.</p><br>
+        <label><b>The masked genome assembly file path in your computer:</b>
+            <input type="text" name="maskedassembly"></label><br>
+        <label><b>Augustus species</b>
+            <input type="text" name="augustus"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="augustus_run" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--busco modal-->
+<div id="busco" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('busco').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>BUSCO provides hidden Markov models for single-copy orthologs conserved in all fungal genomes. Evidence scores for BUSCO are calculated by multiplying “full sequence scores” in hmmer output and length coverage [min (query length, target length)/max (query length, target length)].</p><br>
+        <label><b>faa files of the gene models, please use space to split multiple faa files:</b>
+            <input type="text" name="faas"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="busco" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--nr modal-->
+<div id="nr" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('nr').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>To reduce computing time, FunGAP integrates the gene models from three gene predictions, and removes identical gene models to make nonredundant gene models.</p><br>
+        <label><b>faa files of the gene models, please use space to split multiple faa files:</b>
+            <input type="text" name="faas"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="nr_run" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--blastp modal-->
+<div id="blastp" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('blastp').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Sequence similarity with genes in phylogenetically close genomes can be an evidence for predicted genes being actual genes. Users provide the proteome of phylogenetically related organisms with the --sister_proteome argument. For convenience, FunGAP provides a script, download_sister_orgs.py, which downloads protein sequences from NCBI for a given taxon. To reduce computing time, FunGAP integrates the gene models from three gene predictions, and removes identical gene models to make nonredundant gene models.</p><br>
+        <label><b>None redundant gene model:</b>
+            <input type="text" name="nrprot"></label><br>
+        <label><b>Sister protein database:</b>
+            <input type="text" name="sisterprotein"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="blastp" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--InterProScan modal-->
+<div id="interpro" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('interpro').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Pfam provides a database of manually curated protein families. We assume that gene models annotated with a Pfam domain are more likely to be an actual gene. Evidence scores for Pfam are directly provided by the hmmer3-match score in the XML output of InterProScan (-f XML option). For multiple domains in one gene model, the sum of the scores is used.</p><br>
+        <label><b>None redundant gene model:</b>
+            <input type="text" name="nrprot"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="interpro" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--blastn modal-->
+<div id="blastn" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('blastn').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Sequence similarity with assembled transcriptome can give the direct evidence for reliability of predicted genes. FunGAP runs BLASTn for each predicted gene against Trinity-assembled transcripts. Length coverage is also considered.</p><br>
+         <label><b>The genome assembly file path in your computer:</b>
+             <input type="text" name="genomeassembly"></label><br>
+         <label><b>gff3 files of the gene models, please use space to split multiple faa files:</b>
+             <input type="text" name="gff3s"></label><br>
+        <label><b>Trinity assembly(it should be a single file, if you want concatenate your files, please click <a style="color: red" onclick="document.getElementById('blastn').style.display='none'; document.getElementById('concatenate').style.display='block'">here</a>)</b>
+            <input type="text" name="trinityasm"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+
+      <button type="submit" name="blastn" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--concatenate modal-->
+<div id="concatenate" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('concatenate').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+      <label><b>The trinity assembly files, please use space to split multiple files</b>
+          <input type="text" required name="trinityasms"></label><br>
+      <button type="submit" name="concatenate" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--import blastp modal-->
+<div id="importblastp" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('importblastp').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>score = bit_score * cover(query) * cover(target), the output score dictionary will in the same path as the blastp output file.</p>
+      <label><b>The blastp output file:</b>
+          <input type="text" name="importbp_bp"></label><br>
+        <label><b>The none redundant protein mapping file:</b>
+            <input type="text" name='nrprotmapping'></label><br>
+      <button type="submit" name="importbp" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--import busco modal-->
+<div id="importbo" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('importbo').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Import BUSCO output and store in a dictionary BUSCO evidence score is HMM alignment bit score</p>
+      <label><b>The busco out dir:</b>
+          <input type="text" required name="importbo_bo"></label><br>
+      <button type="submit" name="importbo" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--import pfam scan modal-->
+<div id="importpm" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('importpm').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <label><b>The none redundant protein mapping file:</b>
+            <input type="text" name='nrprotmapping'></label><br>
+      <label><b>pfam scan out:</b>
+          <input type="text" required name="importpm_pm"></label><br>
+      <button type="submit" name="importpm" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--import blastn modal-->
+<div id="importbn" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('importbn').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Import BLASTn result
+ - Input: blastn output directory
+ - Output: dictionary</p>
+      <label><b>The blastn out files, please use space to split multiple files:</b>
+          <input type="text" required name="importbn_bn"></label><br>
+      <button type="submit" name="importbn" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--catch bad genes modal-->
+<div id="catchbad" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('catchbad').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>Catch bad genes for given gff3 files
+  1) Stop codon in the middle of proteins
+  2) Check if translation consists of more than 50% X residues
+  3) Check if feature begins or ends in gap
+Input: multiple gff3s
+Output: pickle for filter_gff3s_ver3.py</p>
+      <label><b>The gff3 files of gene models, please use space to split multiple files</b>
+          <input type="text" required name="gff3s"></label><br>
+        <label><b>genome assembly</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+      <button type="submit" name="catchbad" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--filter modal-->
+<div id="filter" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('filter').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note</h5>
+        <p>The filtered gff3 file is 'filtered_1.gff3' in the 'gene_filtering' folder.<br>The protein of the gene model is 'filtered_prot.faa' in the gene_filtering' folder.</p>
+        <label><b>The gff3 files of gene models, please use space to split multiple files</b>
+            <input type="text" required name="gff3s"></label><br>
+        <label><b>genome assembly</b>
+            <input type="text" name="genomeassembly"></label><br>
+        <label><b>Blastp Dict</b>
+            <input type="text" name="bpdict"></label><br>
+        <label><b>Busco dict</b>
+            <input type="text" name="bodict"></label><br>
+        <label><b>Pfam Dict</b>
+            <input type="text" name="pmdict"></label><br>
+        <label><b>Blastn Dict</b>
+            <input type="text" name="bndict"></label><br>
+        <label><b>Bad Dict</b>
+            <input type="text" name="bddict"></label><br>
+        <label><b>None redundant protein</b>
+            <input type="text" name="noneredundantprot"></label><br>
+        <label><b>None redundant protein mapping</b>
+            <input type="text" name="noneredundantprotmapping"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+      <button type="submit" name="filter" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--post process modal-->
+<div id="postprocess" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('postprocess').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+        <h5>Note!</h5>
+        <p>The processed gff3 will in the same path as your original gff3.</p>
+      <label><b>genome assembly</b>
+          <input type="text" name="genomeassembly"></label><br>
+        <label><b>The original gff3 file</b>
+            <input type="text" name="ori_gff3"></label><br>
+      <button type="submit" name="postprocess" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--create markdown-->
+<div id="createmarkdown" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('createmarkdown').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+      <label><b>genome assembly</b>
+          <input type="text" name="genomeassembly"></label><br>
+        <label><b>Trinity assemblys</b>
+            <input type="text" name="trinity_asms"></label><br>
+        <label><b>Bam files</b>
+            <input type="text" name="bams"></label><br>
+        <label><b>The dinal gff3 file</b>
+            <input type="text" name="final_gff3"></label><br>
+        <label><b>Selecet an output path</b>
+            <input type="text" name="outputdir"></label><br>
+      <button type="submit" name="createmarkdown" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+<!--download proteome modal-->
+<div id="downloadprotdb" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('downloadprotdb').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+      <label><b>Taxon</b>
+          <input type="text" name="taxon"></label><br>
+        <label><b>num_sisters</b>
+            <input type="text" name="num_sisters"></label><br>
+        <label><b>Email Adress</b>
+        <input type="email" name="email"></label><br>
+        <label><b>Output dir</b>
+        <input type="text" name="outputdir"></label><br>
+      <button type="submit" name="downloadprotdb" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+
+<!--get augustus species modal-->
+<div id="getaugustusspecies" class="modal scroll">
+
+  <form class="modal-content animate" method="post">
+       {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('getaugustusspecies').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="Welcome to FunGAP">
+    </div>
+
+    <div class="container">
+      <label><b>Genus name</b>
+          <input type="text" name="genusname"></label><br>
+        <label><b>Email Adress</b>
+        <input type="email" name="email"></label><br>
+      <button type="submit" name="getaugustusspecies" class="btn">Start</button>
+    </div>
+  </form>
+</div>
+
+
+</body>
+<script>
+    function DropFunc() {
+  let x = document.getElementById("Drop");
+  if (x.className.indexOf("w3-show") === -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className =
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+</script>
+<script>
+    onload = function () {
+        if('{{ message }}'!=='') {
+            alert('{{ message }}')
+        }
+    }
+</script>
+{% if messages %}
+    {% for message in messages %}
+    <script>
+    alert('{{ message }}');
+    {% endfor %}
+    </script>
+{% endif %}
+<script>
+        let data = {{ running_info|safe }};
+        if (data.length === 0) {
+            let info = $("<p></p>").html("There is no project now.");
+            info.attr({"style": "color: #5a6268"});
+            $(".sidebar").append(info);
+        } else {
+            data.forEach(function (value) {
+                    let id = 'ID:' + value['pk'] + ' ';
+                    let running_type = 'Type: ' + value['fields']['custom_type'];
+                    let input_info ='Input: ' + value['fields']['custom_input_info'];
+                    let output_info = 'Output: ' + value['fields']['custom_output_info'];
+                    let item1 = $("<h5></h5>").html(id);
+                    let item2 = $("<span></span>").html(running_type);
+                    let item3 = $("<p></p>").html(input_info);
+                    let item4 = $("<p></p>").html(output_info);
+                    const str = "delete_custom("+ value['pk'] + ', this'+")";
+                    let item5 = $("<button></button>").html('&times;').attr({"title": "delete this project", "class": "float-right", "style": "background-color: black; color: white", "onclick": str});
+                    item1.append(item5).append(item2).append(item3).append(item4);
+                    $(".sidebar").append(item1);
+                }
+            )
+        }
+    function delete_custom(custom_id, obj){
+        const data = {"custom_id": custom_id};
+        $.ajax({
+            type: "get",
+            url: "/delete_custom/",
+            data: data,
+            complete:function(data){
+                if( data['responseText'] === ''){
+                    alert('This project is running now!')
+                }
+                else{
+                    obj.parentNode.remove()
+                }
+
+            }
+
+        })
+    }
+</script>
+</html>

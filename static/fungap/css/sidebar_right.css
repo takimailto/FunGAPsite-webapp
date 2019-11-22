@@ -1,0 +1,26 @@
+div#sidebar_right {
+  float: left;
+  width: 165px;
+  margin: 10px 0px 0px 0px;
+}
+
+div.contact {
+  margin: 25px 0px 20px 0px;
+  font-size: 0.7em;
+}
+
+h5.contact_name {
+  border-bottom: 1px dotted #999999;
+  font-size: 1.1em;
+}
+
+div.contact a:link {
+  color: #000000;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+div.contact a:visited {
+  color: #000000;
+  font-weight: bold;
+}

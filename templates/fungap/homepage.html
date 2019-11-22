@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>FunGAP</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Allerta+Stencil">
+<style>
+.w3-allerta {
+    font-family: "Allerta Stencil", Sans-serif, serif;
+}
+</style>
+    <style>
+        /* half-width input fields */
+        input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+  background-color: black;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+  text-align: center;
+  margin: 24px 0 12px 0;
+  position: relative;
+}
+
+img.fungap {
+  width: 40%;
+
+}
+
+.container {
+  padding: 16px;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    font-family: Arial, Helvetica, sans-serif;
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+/* The Close Button (x) */
+        .close {
+            position: absolute;
+            right: 25px;
+            top: 0;
+            color: #000;
+            font-size: 35px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: red;
+            cursor: pointer;
+        }
+
+/* Add Zoom Animation */
+        .animate {
+            -webkit-animation: animatezoom 0.6s;
+            animation: animatezoom 0.6s
+        }
+
+        @-webkit-keyframes animatezoom {
+            from {-webkit-transform: scale(0)}
+            to {-webkit-transform: scale(1)}
+        }
+
+        @keyframes animatezoom {
+            from {transform: scale(0)}
+            to {transform: scale(1)}
+        }
+
+/* Change styles for span and cancel button on extra small screens */
+        @media screen and (max-width: 300px) {
+            span.psw {
+                display: block;
+                float: none;
+            }
+            .cancelbtn {
+                width: 100%;
+            }
+        }
+        .w3-sidebar{
+            overflow-y: scroll;
+            height: 300px;
+        }
+    </style>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+</head>
+<body>
+<div class="w3-top">
+    <div class="w3-bar w3-black">
+        <a href="https://github.com/CompSynBioLab-KoreaUniv/FunGAP" class="w3-bar-item w3-button"><img src="/static/fungap/images/fluidicon.png" alt="" style="height:20px">GITHUB</a>
+        <a href="http://compbio.korea.ac.kr/csbl/index.html" class="w3-bar-item w3-button">ABOUT US</a>
+        <a class="w3-bar-item w3-button w3-dropdown-click" onclick="DropFunc()" style="float: right"><img src="/static/fungap/images/state.png" style="height: 20px"><div id="Drop" class="w3-dropdown-content w3-bar-block w3-white w3-card" style="position: fixed; right: 0px; top: 40px">
+            {% if login %}
+            <p style="color: #5a6268">Sign in as:<br><strong style="color: black">{{ request.session.user_name }}</strong></p>
+            <form method="post">{% csrf_token %}<button type="submit" name="signout" class="w3-bar-item w3-button">Sign out</button></form></div></a>
+            {% else %}
+            <p style="color: #5a6268">You are a visitor</p>
+                <a onclick="document.getElementById('signin').style.display='block'" class="w3-bar-item w3-button">Sign in</a>
+                <a onclick="document.getElementById('register').style.display='block'" class="w3-bar-item w3-button">Register</a></div></data>
+            {% endif %}
+    </div>
+</div>
+<div class="w3-container w3-black w3-center w3-allerta" style="height: 250px;">
+  <p class="w3-jumbo" style="float: left">web-fGAP</p>
+    <p class="w3-xxlarge" style="position: absolute; left: 300px; top: 150px">Fungal Genome Annotation Pipeline</p>
+</div>
+<div class="w3-content w3-padding" style="max-width:1564px">
+    {% if login %}
+    <div class="w3-sidebar w3-bar-block w3-light-wight w3-card" style="width:300px; position: absolute; left: 30px;">
+        <h3 class="w3-bar-item">Projects<a href="/new/" class="w3-button w3-green w3-round-large w3-small" style="position: absolute; right: 30px">New</a></h3>
+    </div>
+    {% endif %}
+<div class="w3-container" style="position: absolute; left: 350px; width: 70%;">
+    <h1>Welcome to web-fGAP</h1>
+    <p><strong>fGAP (fungal Genome Annotation Pipeline)</strong> predicts gene features from genome assembly and RNA-seq reads. Current version only aims to fungai genome, but we will extend the scope to larger eukaryotic genome later.</p>
+    <p>
+            Step -1. Pre-requisites
+            <ul>
+              <li>Genome assembly: FASTA format</li>
+              <li>RNA-seq reads: Illumina-derived paired-end FASTQ files (R0 and R2)</li>
+            </ul>
+          </p>
+
+          <p>
+            Step 0. Upload the files to ftp server
+            <ul>
+              <li>You should upload your files to our ftp server due to large file size. We provide ID/PW protected ftp server. See tutorial for details</li>
+            </ul>
+          </p>
+
+          <p>
+            Step 1. Submit your job
+            <ul>
+              <li>When upload is finished, you can go to submit page and enter ftp url, user and species info to submit your job</li>
+            </ul>
+          </p>
+
+          <p>
+            Step 2. Wait and check status
+            <ul>
+              <li>Depending on genome size and the amount of RNA-seq, the pipeline takes 2~10 days</li>
+            </ul>
+          </p>
+    <p>
+            Step 3. Get the results
+            <ul>
+              <li>We will send an email once all pipeline processes are finished</li>
+              <li>You will get 0) GFF3, 2) Genbank, 3) Protein FASTA, 4) CDS FASTA, 5) .sqn for NCBI submission and 6) prediction summary in HTML.</li>
+            </ul>
+          </p>
+
+          <p>
+            Enjoy with your genes!
+          </p>
+    {% if login %}
+    {% else %}
+    <p>
+        Want to start? Please <a onclick="document.getElementById('register').style.display='block'" class="w3-bar-item w3-button" style="color: indianred">register </a>/ <a onclick="document.getElementById('signin').style.display='block'" class="w3-bar-item w3-button" style="color: indianred">sign in</a> to create your project!
+    </p>
+    {% endif %}
+    <footer class="w3-center w3-white w3-padding-16" >
+        <p>
+            <i>Citation: Byoungnam Min and In-Geol Choi. web-fGAP server: gene prediction platform integrating training and polishing process for fungal genomes. PMID: XX</i>
+        </p>
+        <h5>Contact</h5>
+                <strong>Compatational and synthetic biology laboratory</strong>
+                <br>
+                "
+                 144 Anam-ro, Seongbuk-gu, Seoul, 02841, Korea Tel: +82-2-3290-1152
+                 "
+                <br>
+                <a href="mailto:igchoi@korea.ac.kr">igchoi@korea.ac.kr</a>
+    </footer>
+</div>
+</div>
+<!--The sign in modal-->
+<div id="signin" class="modal" style="display: none">
+
+  <form class="modal-content animate" method="post">
+      {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('signin').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      {{ login_form.username }}
+
+      <label for="psw"><b>Password</b></label>
+      {{ login_form.password }}
+
+        <label><b>Verification code</b></label>
+        {{ login_form.captcha }}
+
+      <button type="submit" name="signin">Login</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+        <span class="psw"><a onclick="document.getElementById('signin').style.display='none', document.getElementById('register').style.display='block'" class="w3-bar-item w3-button">Register</a></span>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('signin').style.display='none'" class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+  </form>
+</div>
+
+<!--the register modal-->
+<div id="register" class="modal" style="display: none">
+
+  <form class="modal-content animate" method="post">
+      {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('register').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      {{ register_form.username }}
+
+      <label for="psw"><b>Set Password</b></label>
+      {{ register_form.password1 }}
+
+        <label for="psw"><b>Confirm Password</b></label>
+        {{ register_form.password2 }}
+
+        <label><b>Email</b></label>
+        {{ register_form.email }}
+
+        <label><b>Verification code</b></label>
+        {{ register_form.captcha }}
+
+      <button type="submit" name="register">Register</button>
+      <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+    </div>
+  </form>
+</div>
+
+      <!--the project form modal-->
+<div id="projectform" class="modal" style="display: none">
+
+  <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('projectform').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+      <div class="container">
+        <label><b>Project name: </b><a id="projectname" style="font-size: 20px"></a></label><br>
+        <label><b>Description: </b><a id="description" style="font-size: 15px"></a></label><br>
+        <label><b>Start point: </b><a id="startpoint" style="font-size: 20px"></a></label><br>
+          <label><b>Species: </b><a id="species" style="font-size: 20px"></a></label><br>
+          <label><b>Status: </b><a id="status" style="font-size: 20px"></a></label><br>
+          <button id="delete_project" class="cancelbtn">Delete</button>
+      </div>
+  </div>
+</div>
+
+<!--the upload modal-->
+<div id="upload" class="modal" style="display: none">
+
+  <form class="modal-content animate" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('upload').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+
+    <div class="container">
+        <label><b>Project name: </b></label><a id="project-name"></a><br><br>
+        <label id="file-type"></label><br><br>
+
+        <label>Genome assembly: </label>
+        {{ upload_form.genome_assembly }}<br><br>
+        <label>Sister proteome: </label>
+        {{ upload_form.sister_proteome }}<br><br>
+        <label>Augustus species: </label>
+        {{ upload_form.augustus_species }}<br><br>
+        {{ upload_form.projectname }}
+
+      <button type="submit" name="upload">Upload</button>
+    </div>
+
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button" onclick="document.getElementById('upload').style.display='none'" class="cancelbtn">Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!--the markdown modal-->
+<div id="markdown" class="modal" style="display: none">
+
+  <div class="modal-content animate">
+    <div class="imgcontainer">
+      <span onclick="document.getElementById('markdown').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <img src="/static/fungap/images/logo.jpg" alt="FunGAP" class="fungap">
+    </div>
+
+    <div class="container" id="markdown_container">
+    </div>
+  </div>
+</div>
+
+</body>
+
+
+<script>
+// Get the modal
+const modal1 = document.getElementById('signin');
+const modal2 = document.getElementById('register');
+const modal3 = document.getElementById('projectform');
+const modal4 = document.getElementById('upload');
+const modal5 = document.getElementById('markdown');
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target === modal1) {
+        modal1.style.display = "none";
+    }
+    if (event.target === modal2) {
+        modal2.style.display = 'none';
+    }
+    if (event.target === modal3) {
+        modal3.style.display = "none";
+    }
+    if (event.target === modal4){
+        modal4.style.display = "none";
+    }
+    if ( event.target === modal5){
+        modal5.style.display = 'none';
+    }
+}
+</script>
+
+<script>
+    function DropFunc() {
+  let x = document.getElementById("Drop");
+  if (x.className.indexOf("w3-show") === -1) {
+    x.className += " w3-show";
+    x.previousElementSibling.className += " w3-green";
+  } else {
+    x.className = x.className.replace(" w3-show", "");
+    x.previousElementSibling.className =
+    x.previousElementSibling.className.replace(" w3-green", "");
+  }
+}
+</script>
+
+<script>
+    onload = function () {
+        if('{{ login_form.captcha.errors }}' !== '' || '{{ register_form.captcha.errors }}' !== ''){
+            alert('{{ login_form.captcha.errors|striptags }}' + '{{ register_form.captcha.errors|striptags }}')
+        }
+        else if('{{ message }}'!=='') {
+            alert('{{ message }}')
+        }
+    }
+</script>
+{% if messages %}
+    {% for message in messages %}
+    <script>
+    alert('{{ message }}');
+    {% endfor %}
+    </script>
+{% endif %}
+{% if login %}
+<script>
+    let prolist = {{ data|safe }};
+    if(prolist.length === 0){
+        let info = $("<p></p>").html("There is no project in your list.");
+        info.attr({"style": "color: #5a6268" });
+        let create = $("<a></a>").html("Create").attr({"style": "color: black", "href": "/new/"});
+        info.append(create).append(" now?");
+        $(".w3-sidebar").append(info);
+    }
+    else {
+        prolist.forEach(function (value) {
+            let project_name = value["fields"]["project_name"];
+            let status = value["fields"]["status"];
+            let project_description = value["fields"]["project_description"];
+            let start_point = value["fields"]["start_point"];
+            let species = value['fields']['species'];
+            let str = "fill_form('" + project_name + "','" + project_description +"','" + start_point + "','" + species + "','" + status + "')";
+            let item1 = $("<a></a>").html(project_name).attr({"class": "w3-bar-item w3-button", "style": "font-size: 20px", 'onclick': str, "id": project_name});
+            $(".w3-sidebar").append(item1);
+        });
+    }
+    function delete_project(project_name){
+        const data = {"project_name": project_name};
+        $.ajax({
+            type: "get",
+            url: "/delete_project/",
+            data: data,
+            complete:function(data){
+                if( data['responseText'] === ''){
+                    alert('This project is running now!')
+                }
+                else{
+                    document.getElementById(project_name).remove()
+                }
+                document.getElementById('projectform').style.display = 'none';
+
+            }
+
+        })
+    }
+    function fill_form(project_name, project_description, start_point, species, status) {
+        document.getElementById('projectform').style.display = 'block';
+        document.getElementById('projectname').innerHTML = project_name;
+        document.getElementById('description').innerHTML = project_description;
+        document.getElementById('startpoint').innerHTML = start_point;
+        document.getElementById('species').innerHTML = species;
+        document.getElementById('status').innerHTML = status;
+        if (status === "upload file") {
+            const str = "fill_upload('" + project_name + "','" + start_point + "')";
+            $("#status").attr({"onclick": str, "class": "w3-button"});
+        }
+        if (status === "finished"){
+            const str = "get_markdown('" + project_name + "')";
+            $("#status").attr({"onclick": str, "class": "w3-button", "title": "View the markdown"});
+        }
+        if (status === "Running"){
+            const str = "get_log('" + project_name + "')";
+            $("#status").attr({"onclick": str, "class": "w3-button", "title": "View the log"});
+        }
+        let str1 = "delete_project('" + project_name + "')";
+        $("#delete_project").attr({"onclick": str1});
+    }
+
+    function fill_upload(project_name, start_point){
+        document.getElementById('upload').style.display = "block";
+        document.getElementById('project-name').innerHTML = project_name;
+        if(start_point === "paired end read"){
+            document.getElementById('file-type').innerHTML='Paired end read(Please choose two files): ' + '{{ upload_form.paired_end_read }}';
+        }
+        else if(start_point === "single end read"){
+            document.getElementById('file-type').innerHTML='Single end read: ' + '{{ upload_form.single_end_read }}';
+        }
+        else{
+            document.getElementById('file-type').innerHTML='BAM file: ' + '{{ upload_form.bam_file }}';
+        }
+        document.getElementById('projectnamedefault').value = project_name;
+    }
+    function get_markdown(project_name){
+        document.getElementById('markdown').style.display = 'block';
+        const data = {"project_name": project_name};
+        $.ajax({
+            type: "get",
+            url: "/get_markdown/",
+            data: data,
+            success: function (resp) {
+                document.getElementById('markdown_container').innerHTML = resp
+            }
+        })
+    }
+
+    function get_log(project_name) {
+        document.getElementById('markdown').style.display = 'block';
+        const data=  {"project_name": project_name};
+        $.ajax({
+            type: "get",
+            url: "/get_log",
+            data: data,
+            success: function (resp) {
+                document.getElementById('markdown_container').innerHTML = resp
+            }
+        })
+    }
+</script>
+{% endif %}
+</html>

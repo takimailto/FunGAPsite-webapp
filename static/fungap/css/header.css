@@ -1,0 +1,16 @@
+#menu_wrapper {
+  padding: 3px 0px 3px 15%;
+  margin: 0px 0px 10px 10px;
+  width: auto;
+  font-size: 70%;
+  font-weight: bold;
+}
+
+#menu_wrapper a:link {
+  color: #000000;
+  text-decoration: none;
+}
+
+#menu_wrapper a:visited {
+  color: #000000;
+}
