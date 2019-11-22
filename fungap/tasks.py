@@ -7,7 +7,7 @@ from datetime import datetime
 from subprocess import check_call
 
 
-FunGAP_dir = '/home/mailto/FunGAP'  # according to user's Fungap installing
+FunGAP_dir = '***'  # ***: FunGAP path in your computer
 sys.path.append(FunGAP_dir)
 from set_logging import set_logging
 
