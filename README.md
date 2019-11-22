@@ -72,4 +72,4 @@ You can also create superuser for more convenient management by:
 ```
 python manage.py createsuperuser
 ```
-Then follow the instructions.
+Then following the instructions.
